@@ -29,6 +29,24 @@ resource "aws_instance" "app" {
 
   iam_instance_profile = aws_iam_instance_profile.ec2.name
 
+  user_data = <<-EOF
+              #!/bin/bash
+              apt-get update -y
+              apt-get install -y python3-pip python3-venv git
+              EOF
+
+  root_block_device {
+    volume_size = 10
+    volume_type = "gp3"
+
+    tags = merge(
+      local.common_tags,
+      {
+        Name = "${var.project_name}-root-volume"
+      }
+    )
+  }
+
   tags = merge(
     local.common_tags,
     {

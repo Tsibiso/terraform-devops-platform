@@ -4,7 +4,7 @@ resource "aws_security_group" "app" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "HTTP"
+    description = "HTTP application traffic"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -12,7 +12,7 @@ resource "aws_security_group" "app" {
   }
 
   ingress {
-    description = "FastAPI"
+    description = "FastAPI application"
     from_port   = 8000
     to_port     = 8000
     protocol    = "tcp"
@@ -20,7 +20,7 @@ resource "aws_security_group" "app" {
   }
 
   ingress {
-    description = "SSH"
+    description = "SSH administration"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -28,6 +28,7 @@ resource "aws_security_group" "app" {
   }
 
   egress {
+    description = "Allow outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
